@@ -128,7 +128,11 @@ def editor_js():
 # editor where we also have the page ID
 class GuacamoleMenuItem(ActionMenuItem):
     def render_html(self, request, context):
-        return mark_safe(f"<script>window.wagtailPageId = {context['page'].id};</script>")
+        try:
+            page_id = context['page'].id
+            return mark_safe(f"<script>window.wagtailPageId = {page_id};</script>")
+        except:
+            return
 
 
 @hooks.register('register_page_action_menu_item')
